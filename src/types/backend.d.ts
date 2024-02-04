@@ -11,8 +11,8 @@ export interface IModelPaginate<T> {
         pageSize: number;
         pages: number;
         total: number;
-    },
-    result: T[]
+    };
+    result: T[];
 }
 
 export interface IAccount {
@@ -24,18 +24,18 @@ export interface IAccount {
         role: {
             _id: string;
             name: string;
-        }
+        };
         permissions: {
             _id: string;
             name: string;
             apiPath: string;
             method: string;
             module: string;
-        }[]
-    }
+        }[];
+    };
 }
 
-export interface IGetAccount extends Omit<IAccount, "access_token"> { }
+export interface IGetAccount extends Omit<IAccount, "access_token"> {}
 
 export interface ICompany {
     _id?: string;
@@ -50,8 +50,6 @@ export interface ICompany {
     updatedAt?: string;
 }
 
-
-
 export interface IUser {
     _id?: string;
     name: string;
@@ -63,12 +61,12 @@ export interface IUser {
     role?: {
         _id: string;
         name: string;
-    }
+    };
 
     company?: {
         _id: string;
         name: string;
-    }
+    };
     createdBy?: string;
     isDeleted?: boolean;
     deletedAt?: boolean | null;
@@ -84,7 +82,7 @@ export interface IJob {
         _id: string;
         name: string;
         logo?: string;
-    }
+    };
     location: string;
     salary: number;
     quantity: number;
@@ -107,20 +105,24 @@ export interface IResume {
     userId: string;
     url: string;
     status: string;
-    companyId: string | {
-        _id: string;
-        name: string;
-        logo: string;
-    };
-    jobId: string | {
-        _id: string;
-        name: string;
-    };
+    companyId:
+        | string
+        | {
+              _id: string;
+              name: string;
+              logo: string;
+          };
+    jobId:
+        | string
+        | {
+              _id: string;
+              name: string;
+          };
     history?: {
         status: string;
         updatedAt: Date;
-        updatedBy: { _id: string; email: string }
-    }[]
+        updatedBy: { _id: string; email: string };
+    }[];
     createdBy?: string;
     isDeleted?: boolean;
     deletedAt?: boolean | null;
@@ -140,7 +142,6 @@ export interface IPermission {
     deletedAt?: boolean | null;
     createdAt?: string;
     updatedAt?: string;
-
 }
 
 export interface IRole {
@@ -167,4 +168,9 @@ export interface ISubscribers {
     deletedAt?: boolean | null;
     createdAt?: string;
     updatedAt?: string;
+}
+
+export interface ISearchJob {
+    location?: string[];
+    skills?: string[];
 }

@@ -203,6 +203,7 @@ const ResumePage = () => {
                     columns={columns}
                     dataSource={resumes}
                     request={async (params, sort, filter): Promise<any> => {
+                        console.log(params)
                         const query = buildQuery(params, sort, filter);
                         dispatch(fetchResume({ query }))
                     }}

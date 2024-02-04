@@ -1,4 +1,4 @@
-import { callFetchJob } from '@/config/api';
+import { callFetchAllJobInHomepage, callFetchJob } from '@/config/api';
 import { LOCATION_LIST, convertSlug, getLocationName } from '@/config/utils';
 import { IJob } from '@/types/backend';
 import { EnvironmentOutlined, ThunderboltOutlined } from '@ant-design/icons';
@@ -9,14 +9,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from 'styles/client.module.scss';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import queryString from 'query-string';
 dayjs.extend(relativeTime)
 
-interface IProps {
-    showPagination?: boolean;
-}
 
-const JobCard = (props: IProps) => {
-    const { showPagination = false } = props;
+const JobCard = (props: any) => {
+    const { showPagination = false, searchJob, setSearchJob } = props;
 
     const [displayJob, setDisplayJob] = useState<IJob[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -30,19 +28,30 @@ const JobCard = (props: IProps) => {
 
     useEffect(() => {
         fetchJob();
-    }, [current, pageSize, filter, sortQuery]);
+    }, [current, pageSize, filter, sortQuery, searchJob]);
 
     const fetchJob = async () => {
         setIsLoading(true)
         let query = `current=${current}&pageSize=${pageSize}`;
+        if (searchJob.location && !searchJob.location?.includes('ALL')) {
+            query += '&' + queryString.stringify({
+                location: searchJob.location
+            })
+        }
+        if (searchJob.skills && !searchJob.skills?.includes('ALL')) {
+            query += '&' + queryString.stringify({
+                skills: searchJob.skills
+            })
+        }
+
         if (filter) {
             query += `&${filter}`;
         }
         if (sortQuery) {
             query += `&${sortQuery}`;
         }
-
-        const res = await callFetchJob(query);
+        ;
+        const res = await callFetchAllJobInHomepage(query);
         if (res && res.data) {
             setDisplayJob(res.data.result);
             setTotal(res.data.meta.total)

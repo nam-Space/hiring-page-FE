@@ -2,15 +2,27 @@ import { Button, Col, Form, Row, Select } from 'antd';
 import { EnvironmentOutlined, MonitorOutlined } from '@ant-design/icons';
 import { LOCATION_LIST, SKILLS_LIST } from '@/config/utils';
 import { ProForm } from '@ant-design/pro-components';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const SearchClient = () => {
+const SearchClient = (props: any) => {
+    const { searchJob, setSearchJob } = props
     const optionsSkills = SKILLS_LIST;
     const optionsLocations = LOCATION_LIST;
     const [form] = Form.useForm();
 
+    const location = useLocation()
+    const navigate = useNavigate()
+
 
     const onFinish = async (values: any) => {
-
+        setSearchJob(values)
+        if (location.pathname === '/') {
+            navigate('/job', {
+                state: {
+                    searchJob: values
+                }
+            })
+        }
     }
 
     return (
@@ -41,6 +53,11 @@ const SearchClient = () => {
                             }
                             optionLabelProp="label"
                             options={optionsSkills}
+                            value={searchJob.skills}
+                            onChange={(value) => setSearchJob({
+                                ...searchJob,
+                                skills: value
+                            })}
                         />
                     </ProForm.Item>
                 </Col>
@@ -58,6 +75,11 @@ const SearchClient = () => {
                             }
                             optionLabelProp="label"
                             options={optionsLocations}
+                            value={searchJob.location}
+                            onChange={(value) => setSearchJob({
+                                ...searchJob,
+                                location: value
+                            })}
                         />
                     </ProForm.Item>
                 </Col>
