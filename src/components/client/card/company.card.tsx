@@ -5,7 +5,7 @@ import { Card, Col, Divider, Empty, Pagination, Row, Spin } from 'antd';
 import { useState, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from 'styles/client.module.scss';
+import styles from 'styles/client/client.module.scss';
 
 interface IProps {
     showPagination?: boolean;
@@ -83,7 +83,7 @@ const CompanyCard = (props: IProps) => {
                                 <Col span={24} md={6} key={item._id}>
                                     <Card
                                         onClick={() => handleViewDetailJob(item)}
-                                        style={{ height: 350 }}
+                                        // style={{ height: 350 }}
                                         hoverable
                                         cover={
                                             <div className={styles["card-customize"]} >
@@ -95,7 +95,7 @@ const CompanyCard = (props: IProps) => {
                                         }
                                     >
                                         <Divider />
-                                        <h3 style={{ textAlign: "center" }}>{item.name}</h3>
+                                        <h3 className={styles["card-title"]} style={{ textAlign: "center" }}>{item.name}</h3>
                                     </Card>
                                 </Col>
                             )

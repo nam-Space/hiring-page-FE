@@ -13,6 +13,9 @@ import ModalUser from "@/components/admin/user/modal.user";
 import ViewDetailUser from "@/components/admin/user/view.user";
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
+import defaultAvatar from '@/assets/images/user/default-avatar.png'
+
+import styles from 'styles/admin/user/user.module.scss'
 
 const UserPage = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -58,6 +61,16 @@ const UserPage = () => {
                     }}>
                         {record._id}
                     </a>
+                )
+            },
+            hideInSearch: true,
+        },
+        {
+            title: 'Avatar',
+            dataIndex: 'avatar',
+            render: (text, record, index, action) => {
+                return (
+                    <img className={styles['avatar']} src={record?.avatar ? `${import.meta.env.VITE_BACKEND_URL}/images/user/${record?.avatar}` : defaultAvatar} />
                 )
             },
             hideInSearch: true,

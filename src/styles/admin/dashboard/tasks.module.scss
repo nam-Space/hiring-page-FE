@@ -1,0 +1,40 @@
+.heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chart {
+    margin-bottom: 16px;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    div {
+        text-align: center;
+
+        h1 {
+            margin-top: 16px;
+            font-weight: bold;
+        }
+    }
+}
+
+.success {
+    color: #48b460;
+}
+
+.reviewing {
+    color: #ffca2b;
+}
+
+.reject {
+    color: #e15360;
+}
+
+.quantity-wrapper {
+    margin-top: 30px;
+}

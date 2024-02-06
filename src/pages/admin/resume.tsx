@@ -13,6 +13,9 @@ import { fetchResume } from "@/redux/slice/resumeSlide";
 import ViewDetailResume from "@/components/admin/resume/view.resume";
 import { ALL_PERMISSIONS } from "@/config/permissions";
 import Access from "@/components/share/access";
+import defaultLogo from '@/assets/images/company/default-logo.webp'
+
+import styles from 'styles/admin/resume/resume.module.scss'
 
 const ResumePage = () => {
     const tableRef = useRef<ActionType>();
@@ -48,7 +51,7 @@ const ResumePage = () => {
         {
             title: 'Id',
             dataIndex: '_id',
-            width: 250,
+            width: 210,
             render: (text, record, index, action) => {
                 return (
                     <a href="#" onClick={() => {
@@ -56,6 +59,19 @@ const ResumePage = () => {
                         setDataInit(record);
                     }}>
                         {record._id}
+                    </a>
+                )
+            },
+            hideInSearch: true,
+        },
+        {
+            title: 'Review',
+            dataIndex: 'view',
+            width: 70,
+            render: (text, record, index, action) => {
+                return (
+                    <a href={`${import.meta.env.VITE_BACKEND_URL}/images/resume/${record.url}`} target="_blank">
+                        Xem
                     </a>
                 )
             },
@@ -84,6 +100,17 @@ const ResumePage = () => {
         {
             title: 'Job',
             dataIndex: ["jobId", "name"],
+            hideInSearch: true,
+        },
+        {
+            title: 'Logo công ty',
+            key: 'logo',
+            width: 50,
+            align: "center",
+            render: (text, record, index) => {
+                return (
+                    <img className={styles['logo']} src={(record?.companyId as any)?.logo ? `${import.meta.env.VITE_BACKEND_URL}/images/company/${(record?.companyId as any)?.logo}` : defaultLogo} />)
+            },
             hideInSearch: true,
         },
         {

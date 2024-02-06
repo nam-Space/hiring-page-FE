@@ -12,6 +12,9 @@ import { callDeleteCompany } from "@/config/api";
 import queryString from 'query-string';
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
+import defaultLogo from '@/assets/images/company/default-logo.webp'
+
+import styles from 'styles/admin/company/company.module.scss'
 
 const CompanyPage = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -45,19 +48,6 @@ const CompanyPage = () => {
 
     const columns: ProColumns<ICompany>[] = [
         {
-            title: 'STT',
-            key: 'index',
-            width: 50,
-            align: "center",
-            render: (text, record, index) => {
-                return (
-                    <>
-                        {(index + 1) + (meta.current - 1) * (meta.pageSize)}
-                    </>)
-            },
-            hideInSearch: true,
-        },
-        {
             title: 'Id',
             dataIndex: '_id',
             width: 250,
@@ -67,6 +57,17 @@ const CompanyPage = () => {
                         {record._id}
                     </span>
                 )
+            },
+            hideInSearch: true,
+        },
+        {
+            title: 'Logo',
+            key: 'logo',
+            width: 50,
+            align: "center",
+            render: (text, record, index) => {
+                return (
+                    <img className={styles['logo']} src={record?.logo ? `${import.meta.env.VITE_BACKEND_URL}/images/company/${record?.logo}` : defaultLogo} />)
             },
             hideInSearch: true,
         },

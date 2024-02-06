@@ -1,0 +1,51 @@
+.heading {
+    background-color: white;
+}
+
+.table-wrapper {
+    white-space: nowrap;
+    border-spacing: unset;
+    width: 100%;
+
+    thead {
+        background-color: #f8f9fa;
+        height: 40px;
+        text-align: left;
+
+        tr {
+            th {
+                padding: 0 8px;
+            }
+        }
+    }
+
+    // tbody {
+    //     tr:hover {
+    //         background-color: #ececec;
+    //     }
+    //     tr {
+    //         transition: background-color ease-out 0.1s;
+    //         td {
+    //             padding: 8px;
+    //             vertical-align: middle !important;
+    //             border-bottom: 1px solid #ccc;
+
+    //             .company-img {
+    //                 width: 60px;
+    //             }
+
+    //             .name {
+    //                 margin-bottom: 4px;
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+.company-img {
+    width: 100%;
+}
+
+.name {
+    margin-bottom: 4px;
+}

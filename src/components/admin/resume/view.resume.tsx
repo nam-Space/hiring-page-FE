@@ -4,6 +4,9 @@ import { Badge, Button, Descriptions, Drawer, Form, Select, message, notificatio
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 const { Option } = Select;
+import defaultLogo from '@/assets/images/company/default-logo.webp'
+
+import styles from 'styles/admin/resume/resume.module.scss'
 
 interface IProps {
     onClose: (v: boolean) => void;
@@ -87,6 +90,14 @@ const ViewDetailResume = (props: IProps) => {
                     </Descriptions.Item>
                     <Descriptions.Item label="Tên Job">
                         {dataInit?.jobId?.name}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Review CV">
+                        <a href={`${import.meta.env.VITE_BACKEND_URL}/images/resume/${dataInit?.url}`} target="_blank">
+                            Xem
+                        </a>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Logo Công Ty">
+                        <img className={styles['logo']} src={dataInit?.companyId?.logo ? `${import.meta.env.VITE_BACKEND_URL}/images/company/${dataInit?.companyId?.logo}` : defaultLogo} />
                     </Descriptions.Item>
                     <Descriptions.Item label="Tên Công Ty">
                         {dataInit?.companyId?.name}

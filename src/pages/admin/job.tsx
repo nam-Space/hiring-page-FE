@@ -12,6 +12,9 @@ import { useNavigate } from "react-router-dom";
 import { fetchJob } from "@/redux/slice/jobSlide";
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
+import defaultLogo from '@/assets/images/company/default-logo.webp'
+
+import styles from 'styles/admin/job/job.module.scss'
 
 const JobPage = () => {
     const tableRef = useRef<ActionType>();
@@ -61,8 +64,31 @@ const JobPage = () => {
             sorter: true,
         },
         {
+            title: 'Logo công ty',
+            key: 'logo',
+            width: 50,
+            align: "center",
+            render: (text, record, index) => {
+                return (
+                    <img className={styles['logo']} src={record?.company?.logo ? `${import.meta.env.VITE_BACKEND_URL}/images/company/${record?.company?.logo}` : defaultLogo} />)
+            },
+            hideInSearch: true,
+        },
+        {
+            title: 'Tên Công Ty',
+            dataIndex: 'company.name',
+            sorter: true,
+            hideInSearch: true,
+            render: (text, record, index) => {
+                return (
+                    <>{record?.company?.name}</>
+                )
+            },
+        },
+        {
             title: 'Mức lương',
             dataIndex: 'salary',
+            width: 100,
             sorter: true,
             render(dom, entity, index, action, schema) {
                 const str = "" + entity.salary;
@@ -104,7 +130,7 @@ const JobPage = () => {
         {
             title: 'CreatedAt',
             dataIndex: 'createdAt',
-            width: 200,
+            width: 160,
             sorter: true,
             render: (text, record, index, action) => {
                 return (
@@ -116,7 +142,7 @@ const JobPage = () => {
         {
             title: 'UpdatedAt',
             dataIndex: 'updatedAt',
-            width: 200,
+            width: 160,
             sorter: true,
             render: (text, record, index, action) => {
                 return (

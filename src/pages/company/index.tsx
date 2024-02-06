@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd';
-import styles from 'styles/client.module.scss';
+import styles from 'styles/client/client.module.scss';
 import CompanyCard from '@/components/client/card/company.card';
 
 const ClientCompanyPage = (props: any) => {

@@ -4,7 +4,7 @@ import { callLogin } from 'config/api';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUserLoginInfo } from '@/redux/slice/accountSlide';
-import styles from 'styles/auth.module.scss';
+import styles from 'styles/auth/auth.module.scss';
 import { useAppSelector } from '@/redux/hooks';
 
 const LoginPage = () => {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { CodeOutlined, ContactsOutlined, DashOutlined, LogoutOutlined, MenuFoldOutlined, RiseOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Avatar, Drawer, Dropdown, MenuProps, Space, message } from 'antd';
 import { Menu, ConfigProvider } from 'antd';
-import styles from '@/styles/client.module.scss';
+import styles from '@/styles/client/client.module.scss';
 import { isMobile } from 'react-device-detect';
 import { FaReact } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { callLogout } from '@/config/api';
 import { setLogoutAction } from '@/redux/slice/accountSlide';
 import ManageAccount from './modal/manage.account';
+import defaultAvatar from '@/assets/images/user/default-avatar.png'
 
 const Header = (props: any) => {
     const navigate = useNavigate();
@@ -124,7 +125,7 @@ const Header = (props: any) => {
                                         <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                                             <Space style={{ cursor: "pointer" }}>
                                                 <span>Welcome {user?.name}</span>
-                                                <Avatar>{user?.name?.substring(0, 2)?.toUpperCase()} </Avatar>
+                                                <Avatar src={user?.avatar ? `${import.meta.env.VITE_BACKEND_URL}/images/user/${user?.avatar}` : defaultAvatar}></Avatar>
                                             </Space>
                                         </Dropdown>
                                     }

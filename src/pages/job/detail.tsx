@@ -2,14 +2,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { IJob } from "@/types/backend";
 import { callFetchJobById } from "@/config/api";
-import styles from 'styles/client.module.scss';
+import styles from 'styles/client/client.module.scss';
 import parse from 'html-react-parser';
 import { Col, Divider, Row, Skeleton, Tag } from "antd";
 import { DollarOutlined, EnvironmentOutlined, HistoryOutlined } from "@ant-design/icons";
-import { getLocationName } from "@/config/utils";
+import { convertSlug, getLocationName } from "@/config/utils";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ApplyModal from "@/components/client/modal/apply.modal";
+import { Link } from "react-router-dom";
 dayjs.extend(relativeTime)
 
 
@@ -20,6 +21,7 @@ const ClientJobDetailPage = (props: any) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     let location = useLocation();
+    const navigate = useNavigate();
     let params = new URLSearchParams(location.search);
     const id = params?.get("id"); // job id
 
@@ -36,6 +38,11 @@ const ClientJobDetailPage = (props: any) => {
         }
         init();
     }, [id]);
+
+    const handleViewDetailJob = (item: IJob) => {
+        const slug = convertSlug(item.company?.name ?? '');
+        return `/company/${slug}?id=${item.company?._id}`
+    }
 
     return (
         <div className={`${styles["container"]} ${styles["detail-job-section"]}`}>
@@ -73,24 +80,29 @@ const ClientJobDetailPage = (props: any) => {
                                     <EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{getLocationName(jobDetail.location)}
                                 </div>
                                 <div>
-                                    <HistoryOutlined /> {dayjs(jobDetail.updatedAt).fromNow()}
+                                    <HistoryOutlined /> Số lượng tuyển: {jobDetail.quantity} người
                                 </div>
                                 <Divider />
                                 {parse(jobDetail.description)}
                             </Col>
 
                             <Col span={24} md={8}>
-                                <div className={styles["company"]}>
+                                <Link
+                                    to={handleViewDetailJob(jobDetail)}
+                                    // style={{ cursor: 'pointer' }}
+                                    // onClick={() => handleViewDetailJob(jobDetail)}
+                                    className={styles["company"]}
+                                >
                                     <div>
                                         <img
                                             alt="example"
                                             src={`${import.meta.env.VITE_BACKEND_URL}/images/company/${jobDetail.company?.logo}`}
                                         />
                                     </div>
-                                    <div>
+                                    <div className={styles["company-name"]}>
                                         {jobDetail.company?.name}
                                     </div>
-                                </div>
+                                </Link>
                             </Col>
                         </>
                     }

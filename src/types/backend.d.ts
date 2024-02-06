@@ -19,8 +19,9 @@ export interface IAccount {
     access_token: string;
     user: {
         _id: string;
-        email: string;
         name: string;
+        avatar?: string;
+        email: string;
         role: {
             _id: string;
             name: string;
@@ -53,6 +54,7 @@ export interface ICompany {
 export interface IUser {
     _id?: string;
     name: string;
+    avatar?: string;
     email: string;
     password?: string;
     age: number;
@@ -97,6 +99,7 @@ export interface IJob {
     deletedAt?: boolean | null;
     createdAt?: string;
     updatedAt?: string;
+    userApply?: number;
 }
 
 export interface IResume {

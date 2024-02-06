@@ -1,5 +1,5 @@
 import { Divider } from 'antd';
-import styles from 'styles/client.module.scss';
+import styles from 'styles/client/client.module.scss';
 import SearchClient from '@/components/client/search.client';
 import JobCard from '@/components/client/card/job.card';
 import CompanyCard from '@/components/client/card/company.card';

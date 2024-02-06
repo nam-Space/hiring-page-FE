@@ -22,6 +22,7 @@ import { isMobile } from 'react-device-detect';
 import type { MenuProps } from 'antd';
 import { setLogoutAction } from '@/redux/slice/accountSlide';
 import { ALL_PERMISSIONS } from '@/config/permissions';
+import defaultAvatar from '@/assets/images/user/default-avatar.png'
 
 const { Content, Footer, Sider } = Layout;
 
@@ -202,8 +203,7 @@ const LayoutAdmin = () => {
                             <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                                 <Space style={{ cursor: "pointer" }}>
                                     Welcome {user?.name}
-                                    <Avatar> {user?.name?.substring(0, 2)?.toUpperCase()} </Avatar>
-
+                                    <Avatar src={user?.avatar ? `${import.meta.env.VITE_BACKEND_URL}/images/user/${user?.avatar}` : defaultAvatar}></Avatar>
                                 </Space>
                             </Dropdown>
                         </div>

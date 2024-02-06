@@ -199,7 +199,16 @@
 
             img {
                 max-width: 100%;
+                width: 100%;
             }
+        }
+
+        .card-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 1;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
         }
     }
 }
@@ -301,6 +310,16 @@
         justify-content: center;
         width: 100%;
         align-items: center;
+
+        .company-name {
+            transition: color ease-out 0.15s;
+        }
+
+        &:hover {
+            .company-name {
+                color: orange;
+            }
+        }
 
         img {
             max-width: 100%;

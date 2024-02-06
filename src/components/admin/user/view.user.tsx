@@ -1,7 +1,9 @@
 import { IUser } from "@/types/backend";
 import { Badge, Descriptions, Drawer } from "antd";
 import dayjs from 'dayjs';
+import defaultAvatar from '@/assets/images/user/default-avatar.png'
 
+import styles from 'styles/admin/user/user.module.scss'
 interface IProps {
     onClose: (v: boolean) => void;
     open: boolean;
@@ -23,16 +25,17 @@ const ViewDetailUser = (props: IProps) => {
             >
                 <Descriptions title="" bordered column={2} layout="vertical">
                     <Descriptions.Item label="Tên hiển thị">{dataInit?.name}</Descriptions.Item>
+                    <Descriptions.Item label="Avatar">{<img className={styles['avatar']} src={dataInit?.avatar ? `${import.meta.env.VITE_BACKEND_URL}/images/user/${dataInit?.avatar}` : defaultAvatar} />}</Descriptions.Item>
                     <Descriptions.Item label="Email">{dataInit?.email}</Descriptions.Item>
 
                     <Descriptions.Item label="Giới Tính">{dataInit?.gender}</Descriptions.Item>
                     <Descriptions.Item label="Tuổi">{dataInit?.age}</Descriptions.Item>
 
                     <Descriptions.Item label="Vai trò" >
-                        <Badge status="processing" text={<>{dataInit?.role}</>} />
+                        <Badge status="processing" text={<>{dataInit?.role?.name}</>} />
                     </Descriptions.Item>
                     <Descriptions.Item label="Địa chỉ" >{dataInit?.address}</Descriptions.Item>
-                    <Descriptions.Item label="Thông tin công ty" span={2}>
+                    <Descriptions.Item label="Thông tin công ty">
                         Id: {dataInit?.company?._id ?? "-"}
                         <br />
                         Tên: {dataInit?.company?.name ?? "-"}

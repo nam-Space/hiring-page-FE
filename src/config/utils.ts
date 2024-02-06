@@ -1,27 +1,37 @@
-import { grey, green, blue, red, orange } from '@ant-design/colors';
+import { grey, green, blue, red, orange } from "@ant-design/colors";
 
-export const SKILLS_LIST =
-    [
-        { label: "React.JS", value: "REACT.JS" },
-        { label: "React Native", value: "REACT NATIVE" },
-        { label: "Vue.JS", value: "VUE.JS" },
-        { label: "Angular", value: "ANGULAR" },
-        { label: "Nest.JS", value: "NEST.JS" },
-        { label: "TypeScript", value: "TYPESCRIPT" },
-        { label: "Java", value: "JAVA" },
-        { label: "Frontend", value: "FRONTEND" },
-        { label: "Backend", value: "BACKEND" },
-        { label: "Fullstack", value: "FULLSTACK" }
-    ];
+export const SKILLS_LIST = [
+    { label: "React.JS", value: "REACT.JS" },
+    { label: "React Native", value: "REACT NATIVE" },
+    { label: "Vue.JS", value: "VUE.JS" },
+    { label: "Angular", value: "ANGULAR" },
+    { label: "Node.JS", value: "NODE.JS" },
+    { label: "Nest.JS", value: "NEST.JS" },
+    { label: "TypeScript", value: "TYPESCRIPT" },
+    { label: "Java", value: "JAVA" },
+    { label: "Frontend", value: "FRONTEND" },
+    { label: "Backend", value: "BACKEND" },
+    { label: "Fullstack", value: "FULLSTACK" },
+    { label: "DevOps", value: "DEVOPS" },
+    { label: "Php", value: "PHP" },
+    { label: ".NET", value: ".NET" },
+    { label: "Python", value: "PYTHON" },
+    { label: "C++", value: "C++" },
+    { label: "Ruby", value: "RUBY" },
+    { label: "Go", value: "GO" },
+    { label: "Swift", value: "SWIFT" },
+    { label: "Android", value: "ANDROID" },
+    { label: "IOS", value: "IOS" },
+];
 
-export const LOCATION_LIST =
-    [
-        { label: "Hà Nội", value: "HANOI" },
-        { label: "Hồ Chí Minh", value: "HOCHIMINH" },
-        { label: "Đà Nẵng", value: "DANANG" },
-        { label: "Others", value: "OTHER" },
-        { label: "Tất cả thành phố", value: "ALL" },
-    ];
+export const LOCATION_LIST = [
+    { label: "Hà Nội", value: "HANOI" },
+    { label: "Hồ Chí Minh", value: "HOCHIMINH" },
+    { label: "Hải Phòng", value: "HAIPHONG" },
+    { label: "Đà Nẵng", value: "DANANG" },
+    { label: "Others", value: "OTHER" },
+    { label: "Tất cả thành phố", value: "ALL" },
+];
 
 export const nonAccentVietnamese = (str: string) => {
     str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
@@ -42,44 +52,48 @@ export const nonAccentVietnamese = (str: string) => {
     str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng
     str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
     return str;
-}
-
+};
 
 export const convertSlug = (str: string) => {
     str = nonAccentVietnamese(str);
-    str = str.replace(/^\s+|\s+$/g, ''); // trim
+    str = str.replace(/^\s+|\s+$/g, ""); // trim
     str = str.toLowerCase();
 
     // remove accents, swap ñ for n, etc
-    const from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿžþÞĐđßÆa·/_,:;";
-    const to = "AAAAAACCCDEEEEEEEEGIIIIINNOOOOOORRSSTUUUUUYYZaaaaaacccdeeeeeeeegiiiiinnooooooorrsstuuuuuyyzbBDdBAa------";
+    const from =
+        "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿžþÞĐđßÆa·/_,:;";
+    const to =
+        "AAAAAACCCDEEEEEEEEGIIIIINNOOOOOORRSSTUUUUUYYZaaaaaacccdeeeeeeeegiiiiinnooooooorrsstuuuuuyyzbBDdBAa------";
     for (let i = 0, l = from.length; i < l; i++) {
-        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+        str = str.replace(new RegExp(from.charAt(i), "g"), to.charAt(i));
     }
 
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-        .replace(/\s+/g, '-') // collapse whitespace and replace by -
-        .replace(/-+/g, '-'); // collapse dashes
+    str = str
+        .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+        .replace(/\s+/g, "-") // collapse whitespace and replace by -
+        .replace(/-+/g, "-"); // collapse dashes
 
     return str;
-}
+};
 
 export const getLocationName = (value: string) => {
-    const locationFilter = LOCATION_LIST.filter(item => item.value === value);
+    const locationFilter = LOCATION_LIST.filter((item) => item.value === value);
     if (locationFilter.length) return locationFilter[0].label;
-    return 'unknown'
-}
+    return "unknown";
+};
 
-export function colorMethod(method: "POST" | "PUT" | "GET" | "DELETE" | string) {
+export function colorMethod(
+    method: "POST" | "PUT" | "GET" | "DELETE" | string
+) {
     switch (method) {
         case "POST":
-            return green[6]
+            return green[6];
         case "PUT":
-            return orange[6]
+            return orange[6];
         case "GET":
-            return blue[6]
+            return blue[6];
         case "DELETE":
-            return red[6]
+            return red[6];
         default:
             return grey[10];
     }

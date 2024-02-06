@@ -169,6 +169,16 @@ export const callFetchAllJobInHomepage = (query: string) => {
     );
 };
 
+export const callFetchJobWithUserApply = (query: string) => {
+    return axios.post<IBackendRes<IModelPaginate<IJob>>>(
+        `/api/v1/jobs/get-jobs-with-user-apply?${query}`
+    );
+};
+
+export const callFetchJobDashboard = () => {
+    return axios.post<IBackendRes<IJob[]>>(`/api/v1/jobs/get-total-jobs`);
+};
+
 export const callFetchJobById = (id: string) => {
     return axios.get<IBackendRes<IJob>>(`/api/v1/jobs/${id}`);
 };
@@ -198,6 +208,12 @@ export const callDeleteResume = (id: string) => {
 export const callFetchResume = (query: string) => {
     return axios.get<IBackendRes<IModelPaginate<IResume>>>(
         `/api/v1/resumes?${query}`
+    );
+};
+
+export const callFetchResumeDashboard = () => {
+    return axios.post<IBackendRes<IResume[]>>(
+        `/api/v1/resumes/get-total-resumes`
     );
 };
 

@@ -2,7 +2,7 @@ import { Button, Divider, Form, Input, Row, Select, message, notification } from
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { callRegister } from 'config/api';
-import styles from 'styles/auth.module.scss';
+import styles from 'styles/auth/auth.module.scss';
 import { IUser } from '@/types/backend';
 const { Option } = Select;
 
