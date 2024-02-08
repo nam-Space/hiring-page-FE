@@ -22,6 +22,13 @@ export interface IAccount {
         name: string;
         avatar?: string;
         email: string;
+        age?: number;
+        gender?: string;
+        address?: string;
+        company?: {
+            _id: string;
+            name: string;
+        };
         role: {
             _id: string;
             name: string;
@@ -60,6 +67,7 @@ export interface IUser {
     age: number;
     gender: string;
     address: string;
+    tokenPassword?: string;
     role?: {
         _id: string;
         name: string;
@@ -69,6 +77,30 @@ export interface IUser {
         _id: string;
         name: string;
     };
+    createdBy?: string;
+    isDeleted?: boolean;
+    deletedAt?: boolean | null;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface IUpdateUserPassword {
+    _id?: string;
+    password?: string;
+    new_password: string;
+    renew_password: string;
+
+    createdBy?: string;
+    isDeleted?: boolean;
+    deletedAt?: boolean | null;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface IUserByEmailAndTokenPassword {
+    email: string;
+    tokenPassword: string;
+
     createdBy?: string;
     isDeleted?: boolean;
     deletedAt?: boolean | null;
@@ -173,7 +205,15 @@ export interface ISubscribers {
     updatedAt?: string;
 }
 
+export interface IMail {
+    notification: string;
+}
+
 export interface ISearchJob {
     location?: string[];
     skills?: string[];
+}
+
+export interface IGenerateTokenPasswordDto {
+    email: string;
 }

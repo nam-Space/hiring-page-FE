@@ -30,6 +30,8 @@ import ClientJobPage from './pages/job';
 import ClientJobDetailPage from './pages/job/detail';
 import ClientCompanyPage from './pages/company';
 import ClientCompanyDetailPage from './pages/company/detail';
+import ForgotPage from './pages/auth/forgot';
+import ForgotPasswordPage from './pages/auth/forgotPassword';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,11 +62,6 @@ export default function App() {
 
 
   useEffect(() => {
-    if (
-      window.location.pathname === '/login'
-      || window.location.pathname === '/register'
-    )
-      return;
     dispatch(fetchAccount())
   }, [])
 
@@ -156,6 +153,14 @@ export default function App() {
       path: "/register",
       element: <RegisterPage />,
     },
+    {
+      path: "/forgot",
+      element: <ForgotPage />,
+    },
+    {
+      path: "/forgotPassword",
+      element: <ForgotPasswordPage />,
+    }
   ]);
 
   return (

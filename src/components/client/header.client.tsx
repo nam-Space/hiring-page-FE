@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { callLogout } from '@/config/api';
 import { setLogoutAction } from '@/redux/slice/accountSlide';
-import ManageAccount from './modal/manage.account';
+import ManageAccount from './modal/manageAccount/manage.account';
 import defaultAvatar from '@/assets/images/user/default-avatar.png'
 
 const Header = (props: any) => {

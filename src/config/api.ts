@@ -11,6 +11,10 @@ import {
     IRole,
     ISubscribers,
     ISearchJob,
+    IUpdateUserPassword,
+    IUserByEmailAndTokenPassword,
+    IGenerateTokenPasswordDto,
+    IMail,
 } from "@/types/backend";
 import axios from "config/axios-customize";
 
@@ -127,8 +131,39 @@ export const callCreateUser = (user: IUser) => {
     return axios.post<IBackendRes<IUser>>("/api/v1/users", { ...user });
 };
 
+export const callGetUserByEmailAndTokenPassword = (
+    data: IUserByEmailAndTokenPassword
+) => {
+    return axios.post<IBackendRes<IUser>>(
+        "/api/v1/users/get-user-by-email-and-token-password",
+        { ...data }
+    );
+};
+
 export const callUpdateUser = (user: IUser) => {
     return axios.patch<IBackendRes<IUser>>(`/api/v1/users`, { ...user });
+};
+
+export const callUpdateUserProfileHomepage = (user: IUser) => {
+    return axios.patch<IBackendRes<IUser>>(
+        `/api/v1/users/update-profile-homepage`,
+        { ...user }
+    );
+};
+
+export const callUpdateUserPassword = (data: IUpdateUserPassword) => {
+    return axios.patch<IBackendRes<IUser>>(`/api/v1/users/change-password`, {
+        ...data,
+    });
+};
+
+export const callUpdateUserPasswordForLogin = (data: IUpdateUserPassword) => {
+    return axios.patch<IBackendRes<IUser>>(
+        `/api/v1/users/change-password-for-login`,
+        {
+            ...data,
+        }
+    );
 };
 
 export const callDeleteUser = (id: string) => {
@@ -139,6 +174,10 @@ export const callFetchUser = (query: string) => {
     return axios.get<IBackendRes<IModelPaginate<IUser>>>(
         `/api/v1/users?${query}`
     );
+};
+
+export const callFetchUserById = (id: string) => {
+    return axios.get<IBackendRes<IUser>>(`/api/v1/users/${id}`);
 };
 
 /**
@@ -313,4 +352,11 @@ export const callFetchSubscriber = (query: string) => {
 
 export const callFetchSubscriberById = (id: string) => {
     return axios.get<IBackendRes<ISubscribers>>(`/api/v1/subscribers/${id}`);
+};
+
+export const callGenerateTokenPassword = (data: IGenerateTokenPasswordDto) => {
+    return axios.post<IBackendRes<IMail>>(
+        `/api/v1/mail/generate-token-password`,
+        { ...data }
+    );
 };

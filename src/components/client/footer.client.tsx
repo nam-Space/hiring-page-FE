@@ -1,8 +1,8 @@
 
 const Footer = () => {
     return (
-        <footer style={{ padding: 15, textAlign: "center" }}>
-            {/* <div>Frontend React Typescript - Series Nest.JS Basic &copy; Hỏi Dân IT</div> */}
+        <footer style={{ marginTop: 15, padding: 15, textAlign: "center", backgroundColor: '#F0F2F6' }}>
+            <div>Frontend React Typescript - Recruitment page &copy; Nguyễn Viết Nam</div>
         </footer>
     )
 }

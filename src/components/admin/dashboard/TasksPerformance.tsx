@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Dropdown } from 'react-bootstrap';
-import { Card as CardAntd, Col, Row, Statistic } from "antd";
-import { MoreVertical } from 'react-feather';
-import { Link } from "react-router-dom";
+import { Card as CardAntd, } from "antd";
 import dynamic from 'next/dynamic';
 import styles from 'styles/admin/dashboard/tasks.module.scss';
 import { callFetchResumeDashboard } from "@/config/api";

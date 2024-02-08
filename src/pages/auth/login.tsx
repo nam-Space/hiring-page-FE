@@ -1,16 +1,16 @@
 import { Button, Divider, Form, Input, message, notification } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { callLogin } from 'config/api';
+import { callFetchAccount, callFetchJobDashboard, callLogin, callRefreshToken } from 'config/api';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUserLoginInfo } from '@/redux/slice/accountSlide';
 import styles from 'styles/auth/auth.module.scss';
-import { useAppSelector } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 
-const LoginPage = () => {
+const LoginPage = (props: any) => {
     const navigate = useNavigate();
     const [isSubmit, setIsSubmit] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(state => state.account.isAuthenticated);
 
     let location = useLocation();
@@ -20,10 +20,10 @@ const LoginPage = () => {
     useEffect(() => {
         //đã login => redirect to '/'
         if (isAuthenticated) {
-            // navigate('/');
-            window.location.href = '/';
+            navigate('/');
+            // window.location.href = '/';
         }
-    }, [])
+    }, [isAuthenticated])
 
     const onFinish = async (values: any) => {
         const { username, password } = values;
@@ -44,7 +44,6 @@ const LoginPage = () => {
             })
         }
     };
-
 
     return (
         <div className={styles["login-page"]}>
@@ -88,11 +87,18 @@ const LoginPage = () => {
                                 </Button>
                             </Form.Item>
                             <Divider>Or</Divider>
-                            <p className="text text-normal">Chưa có tài khoản ?
-                                <span>
-                                    <Link to='/register' > Đăng Ký </Link>
-                                </span>
-                            </p>
+                            <div className={styles["wrapper-auth"]}>
+                                <p className="text text-normal">
+                                    <span>
+                                        <Link to='/forgot' >Quên mật khẩu?</Link>
+                                    </span>
+                                </p>
+                                <p className="text text-normal">Chưa có tài khoản ?
+                                    <span>
+                                        <Link to='/register' > Đăng Ký </Link>
+                                    </span>
+                                </p>
+                            </div>
                         </Form>
                     </section>
                 </div>

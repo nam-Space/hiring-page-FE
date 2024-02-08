@@ -20,6 +20,13 @@ interface IState {
         name: string;
         avatar?: string;
         email: string;
+        age?: number;
+        gender?: string;
+        address?: string;
+        company?: {
+            _id: string;
+            name: string;
+        };
         role: {
             _id: string;
             name: string;
@@ -45,6 +52,13 @@ const initialState: IState = {
         name: "",
         avatar: "",
         email: "",
+        age: 0,
+        gender: "",
+        address: "",
+        company: {
+            _id: "",
+            name: "",
+        },
         role: {
             _id: "",
             name: "",
@@ -71,6 +85,10 @@ export const accountSlide = createSlice({
             state.user.name = action.payload.name;
             state.user.avatar = action.payload?.avatar;
             state.user.email = action.payload.email;
+            state.user.age = action.payload.age;
+            state.user.gender = action.payload.gender;
+            state.user.address = action.payload.address;
+            state.user.company = action.payload.company;
             state.user.role = action?.payload?.role;
             state.user.permissions = action?.payload?.permissions;
         },
@@ -79,8 +97,16 @@ export const accountSlide = createSlice({
             state.isAuthenticated = false;
             state.user = {
                 _id: "",
-                email: "",
                 name: "",
+                avatar: "",
+                email: "",
+                age: 0,
+                gender: "",
+                address: "",
+                company: {
+                    _id: "",
+                    name: "",
+                },
                 role: {
                     _id: "",
                     name: "",
@@ -110,6 +136,10 @@ export const accountSlide = createSlice({
                 state.user.name = action.payload.user?.name;
                 state.user.avatar = action.payload.user?.avatar;
                 state.user.email = action.payload.user?.email;
+                state.user.age = action.payload.user?.age;
+                state.user.gender = action.payload.user?.gender;
+                state.user.address = action.payload.user?.address;
+                state.user.company = action.payload.user?.company;
                 state.user.role = action?.payload?.user?.role;
                 state.user.permissions = action?.payload?.user?.permissions;
             }

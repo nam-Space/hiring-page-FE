@@ -4,6 +4,7 @@ import SearchClient from '@/components/client/search.client';
 import JobCard from '@/components/client/card/job.card';
 import CompanyCard from '@/components/client/card/company.card';
 import { useState } from 'react';
+import { useAppSelector } from '@/redux/hooks';
 
 const HomePage = () => {
     const [searchJob, setSearchJob] = useState({});

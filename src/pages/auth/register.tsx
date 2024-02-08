@@ -1,15 +1,26 @@
 import { Button, Divider, Form, Input, Row, Select, message, notification } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { callRegister } from 'config/api';
 import styles from 'styles/auth/auth.module.scss';
 import { IUser } from '@/types/backend';
+import { useAppSelector } from '@/redux/hooks';
 const { Option } = Select;
 
 
 const RegisterPage = () => {
     const navigate = useNavigate();
     const [isSubmit, setIsSubmit] = useState(false);
+
+    const isAuthenticated = useAppSelector(state => state.account.isAuthenticated);
+
+    useEffect(() => {
+        //đã login => redirect to '/'
+        if (isAuthenticated) {
+            navigate('/');
+            // window.location.href = '/';
+        }
+    }, [isAuthenticated])
 
     const onFinish = async (values: IUser) => {
         const { name, email, password, age, gender, address } = values;

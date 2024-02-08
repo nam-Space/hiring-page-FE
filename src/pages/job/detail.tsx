@@ -9,7 +9,7 @@ import { DollarOutlined, EnvironmentOutlined, HistoryOutlined } from "@ant-desig
 import { convertSlug, getLocationName } from "@/config/utils";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import ApplyModal from "@/components/client/modal/apply.modal";
+import ApplyModal from "@/components/client/modal/applyModal/apply.modal";
 import { Link } from "react-router-dom";
 dayjs.extend(relativeTime)
 
