@@ -1,5 +1,5 @@
-### Source code frontend khóa học Nest.JS
-Tác giả: Hỏi Dân IT
+### Source code Full-Stack với React + Vite + Nestjs
+Tác giả: Nguyễn Viết Nam
 
 Các bước cài đặt: (chế độ development)
 1. clone code
