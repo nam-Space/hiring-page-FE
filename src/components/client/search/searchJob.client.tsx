@@ -4,7 +4,7 @@ import { LOCATION_LIST, SKILLS_LIST } from '@/config/utils';
 import { ProForm } from '@ant-design/pro-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const SearchClient = (props: any) => {
+const SearchJobClient = (props: any) => {
     const { searchJob, setSearchJob } = props
     const optionsSkills = SKILLS_LIST;
     const optionsLocations = LOCATION_LIST;
@@ -90,4 +90,4 @@ const SearchClient = (props: any) => {
         </ProForm>
     )
 }
-export default SearchClient;
+export default SearchJobClient;

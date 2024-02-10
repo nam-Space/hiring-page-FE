@@ -49,6 +49,7 @@ export interface ICompany {
     _id?: string;
     name?: string;
     address?: string;
+    location?: string;
     logo: string;
     description?: string;
     createdBy?: string;

@@ -3,11 +3,12 @@ import { Col, ConfigProvider, Form, Modal, Row, Upload, message, notification } 
 import { isMobile } from 'react-device-detect';
 import { useState, useEffect } from "react";
 import { callCreateUser, callFetchCompany, callFetchRole, callUpdateUser, callUploadSingleFile } from "@/config/api";
-import { IUser } from "@/types/backend";
+import { IRole, IUser } from "@/types/backend";
 import { DebounceSelect } from "./debouce.select";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { v4 as uuidv4 } from 'uuid';
 import enUS from 'antd/lib/locale/en_US';
+import { NORMAL_USER } from "@/constants/role";
 
 interface IProps {
     openModal: boolean;
@@ -23,6 +24,12 @@ export interface ICompanySelect {
     key?: string;
 }
 
+export interface IRoleSelect {
+    label: string;
+    value: string;
+    key?: string;
+}
+
 interface IUserAvatar {
     name: string;
     uid: string;
@@ -30,8 +37,16 @@ interface IUserAvatar {
 
 const ModalUser = (props: IProps) => {
     const { openModal, setOpenModal, reloadTable, dataInit, setDataInit } = props;
-    const [companies, setCompanies] = useState<ICompanySelect[]>([]);
-    const [roles, setRoles] = useState<ICompanySelect[]>([]);
+    const [company, setCompany] = useState<ICompanySelect>({
+        label: "",
+        value: "",
+        key: "",
+    });
+    const [role, setRole] = useState<IRoleSelect>({
+        label: "",
+        value: "",
+        key: "",
+    });
 
     const [loadingUpload, setLoadingUpload] = useState<boolean>(false);
     const [dataAvatar, setDataAvatar] = useState<IUserAvatar[]>([]);
@@ -43,40 +58,50 @@ const ModalUser = (props: IProps) => {
 
     useEffect(() => {
         if (dataInit?._id) {
+            if (dataInit?.avatar) {
+                setDataAvatar([
+                    {
+                        uid: uuidv4(),
+                        name: dataInit.avatar
+                    }
+                ])
+            }
             if (dataInit.company) {
-                setCompanies([{
+                setCompany({
                     label: dataInit.company.name,
                     value: dataInit.company._id,
                     key: dataInit.company._id,
-                }])
+                })
             }
+
             if (dataInit.role) {
-                setRoles([
+                setRole(
                     {
                         label: dataInit.role?.name,
                         value: dataInit.role?._id,
                         key: dataInit.role?._id,
                     }
-                ])
+                )
             }
         }
+        return () => form.resetFields()
     }, [dataInit]);
 
     const submitUser = async (valuesForm: any) => {
-        const { name, email, password, address, age, gender, role, company } = valuesForm;
+        const { name, email, password, address, age, gender } = valuesForm;
 
         if (dataInit?._id) {
             //update
             const user = {
                 _id: dataInit._id,
                 name,
-                avatar: dataAvatar[0].name,
+                avatar: dataAvatar[0]?.name,
                 email,
                 password,
                 age,
                 gender,
                 address,
-                role: role.value,
+                role: role.value as any,
                 company: {
                     _id: company.value,
                     name: company.label
@@ -98,13 +123,13 @@ const ModalUser = (props: IProps) => {
             //create
             const user = {
                 name,
-                avatar: dataAvatar[0].name,
+                avatar: dataAvatar[0]?.name,
                 email,
                 password,
                 age,
                 gender,
                 address,
-                role: role.value,
+                role: role.value as any,
                 company: {
                     _id: company.value,
                     name: company.label
@@ -127,8 +152,17 @@ const ModalUser = (props: IProps) => {
     const handleReset = async () => {
         form.resetFields();
         setDataInit(null);
-        setCompanies([]);
-        setRoles([]);
+        setDataAvatar([])
+        setCompany({
+            label: "",
+            value: "",
+            key: "",
+        });
+        setRole({
+            label: "",
+            value: "",
+            key: "",
+        });
         setOpenModal(false);
     }
 
@@ -274,13 +308,13 @@ const ModalUser = (props: IProps) => {
                             labelCol={{ span: 24 }}
                             label="Ảnh avatar"
                             name="avatar"
-                            rules={[{
-                                required: false,
-                                validator: () => {
-                                    if (dataAvatar.length > 0) return Promise.resolve();
-                                    else return Promise.reject(false);
-                                }
-                            }]}
+                        // rules={[{
+                        //     required: false,
+                        //     validator: () => {
+                        //         if (dataAvatar.length > 0) return Promise.resolve();
+                        //         else return Promise.reject(false);
+                        //     }
+                        // }]}
                         >
                             <ConfigProvider locale={enUS}>
                                 <Upload
@@ -350,19 +384,20 @@ const ModalUser = (props: IProps) => {
                             name="role"
                             label="Vai trò"
                             rules={[{ required: true, message: 'Vui lòng chọn vai trò!' }]}
-
                         >
                             <DebounceSelect
                                 allowClear
                                 showSearch
-                                defaultValue={roles}
-                                value={roles}
+                                defaultValue={role}
+                                value={role}
                                 placeholder="Chọn công vai trò"
                                 fetchOptions={fetchRoleList}
                                 onChange={(newValue: any) => {
-                                    if (newValue?.length === 0 || newValue?.length === 1) {
-                                        setRoles(newValue as ICompanySelect[]);
-                                    }
+                                    setRole({
+                                        key: newValue.key,
+                                        label: newValue.label,
+                                        value: newValue.value
+                                    });
                                 }}
                                 style={{ width: '100%' }}
                             />
@@ -373,19 +408,21 @@ const ModalUser = (props: IProps) => {
                         <ProForm.Item
                             name="company"
                             label="Thuộc Công Ty"
-                            rules={[{ required: true, message: 'Vui lòng chọn company!' }]}
+                            rules={[{ required: false, message: 'Vui lòng chọn company!' }]}
                         >
                             <DebounceSelect
                                 allowClear
                                 showSearch
-                                defaultValue={companies}
-                                value={companies}
+                                defaultValue={company}
+                                value={company}
                                 placeholder="Chọn công ty"
                                 fetchOptions={fetchCompanyList}
                                 onChange={(newValue: any) => {
-                                    if (newValue?.length === 0 || newValue?.length === 1) {
-                                        setCompanies(newValue as ICompanySelect[]);
-                                    }
+                                    setCompany({
+                                        key: newValue.key,
+                                        label: newValue.label,
+                                        value: newValue.value
+                                    });
                                 }}
                                 style={{ width: '100%' }}
                             />

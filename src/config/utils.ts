@@ -22,6 +22,8 @@ export const SKILLS_LIST = [
     { label: "Swift", value: "SWIFT" },
     { label: "Android", value: "ANDROID" },
     { label: "IOS", value: "IOS" },
+    { label: "Kotlin", value: "KOTLIN" },
+    { label: "Flutter", value: "FLUTTER" },
 ];
 
 export const LOCATION_LIST = [

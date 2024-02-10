@@ -2,6 +2,7 @@ import { callFetchCompany } from '@/config/api';
 import { convertSlug } from '@/config/utils';
 import { ICompany } from '@/types/backend';
 import { Card, Col, Divider, Empty, Pagination, Row, Spin } from 'antd';
+import queryString from 'query-string';
 import { useState, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,16 +10,19 @@ import styles from 'styles/client/client.module.scss';
 
 interface IProps {
     showPagination?: boolean;
+    pageSizeRender?: number;
+    searchCompany?: any;
+    setSearchCompany?: any
 }
 
 const CompanyCard = (props: IProps) => {
-    const { showPagination = false } = props;
+    const { searchCompany, setSearchCompany, pageSizeRender = 4, showPagination = false } = props;
 
     const [displayCompany, setDisplayCompany] = useState<ICompany[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(4);
+    const [pageSize, setPageSize] = useState(pageSizeRender ?? 4);
     const [total, setTotal] = useState(0);
     const [filter, setFilter] = useState("");
     const [sortQuery, setSortQuery] = useState("sort=-updatedAt");
@@ -26,7 +30,7 @@ const CompanyCard = (props: IProps) => {
 
     useEffect(() => {
         fetchCompany();
-    }, [current, pageSize, filter, sortQuery]);
+    }, [current, pageSize, filter, sortQuery, searchCompany]);
 
     const fetchCompany = async () => {
         setIsLoading(true)
@@ -36,6 +40,14 @@ const CompanyCard = (props: IProps) => {
         }
         if (sortQuery) {
             query += `&${sortQuery}`;
+        }
+        if (searchCompany?.name) {
+            query += `&name=/${searchCompany.name}/i`
+        }
+        if (searchCompany?.location && !searchCompany?.location?.includes('ALL')) {
+            query += '&' + queryString.stringify({
+                location: searchCompany.location
+            })
         }
 
         const res = await callFetchCompany(query);

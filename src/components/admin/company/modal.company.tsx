@@ -1,5 +1,5 @@
 import { CheckSquareOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { FooterToolbar, ModalForm, ProCard, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
+import { FooterToolbar, ModalForm, ProCard, ProForm, ProFormSelect, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
 import { Col, ConfigProvider, Form, Modal, Row, Upload, message, notification } from "antd";
 import { isMobile } from 'react-device-detect';
 import ReactQuill from 'react-quill';
@@ -9,6 +9,8 @@ import { callCreateCompany, callUpdateCompany, callUploadSingleFile } from "@/co
 import { ICompany } from "@/types/backend";
 import { v4 as uuidv4 } from 'uuid';
 import enUS from 'antd/lib/locale/en_US';
+import { DebounceSelect } from "../user/debouce.select";
+import { LOCATION_LIST } from "@/config/utils";
 
 interface IProps {
     openModal: boolean;
@@ -20,6 +22,7 @@ interface IProps {
 
 interface ICompanyForm {
     name: string;
+    location: string;
     address: string;
 }
 
@@ -44,13 +47,24 @@ const ModalCompany = (props: IProps) => {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (dataInit?._id && dataInit?.description) {
-            setValue(dataInit.description);
+        if (dataInit?._id) {
+            if (dataInit?.logo) {
+                setDataLogo([
+                    {
+                        uid: uuidv4(),
+                        name: dataInit.logo
+                    }
+                ])
+            }
+            if (dataInit?.description) {
+                setValue(dataInit.description);
+            }
         }
+        return () => form.resetFields()
     }, [dataInit])
 
     const submitCompany = async (valuesForm: ICompanyForm) => {
-        const { name, address } = valuesForm;
+        const { name, location, address } = valuesForm;
 
         if (dataLogo.length === 0) {
             message.error('Vui lòng upload ảnh Logo')
@@ -59,7 +73,7 @@ const ModalCompany = (props: IProps) => {
 
         if (dataInit?._id) {
             //update
-            const res = await callUpdateCompany(dataInit._id, name, address, value, dataLogo[0].name);
+            const res = await callUpdateCompany(dataInit._id, name, location, address, value, dataLogo[0].name);
             if (res.data) {
                 message.success("Cập nhật company thành công");
                 handleReset();
@@ -72,7 +86,7 @@ const ModalCompany = (props: IProps) => {
             }
         } else {
             //create
-            const res = await callCreateCompany(name, address, value, dataLogo[0].name);
+            const res = await callCreateCompany(name, location, address, value, dataLogo[0].name);
             if (res.data) {
                 message.success("Thêm mới company thành công");
                 handleReset();
@@ -90,6 +104,7 @@ const ModalCompany = (props: IProps) => {
         form.resetFields();
         setValue("");
         setDataInit(null);
+        setDataLogo([])
 
         //add animation when closing modal
         setAnimation('close')
@@ -257,7 +272,16 @@ const ModalCompany = (props: IProps) => {
 
                             </Col>
 
-                            <Col span={16}>
+                            <Col span={8}>
+                                <ProFormSelect
+                                    name="location"
+                                    label="Vị trí"
+                                    options={LOCATION_LIST.filter(item => item.value !== 'ALL')}
+                                    placeholder="Please select a location"
+                                    rules={[{ required: true, message: 'Vui lòng chọn vị trí!' }]}
+                                />
+                            </Col>
+                            <Col span={8}>
                                 <ProFormTextArea
                                     label="Địa chỉ"
                                     name="address"

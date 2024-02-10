@@ -82,12 +82,14 @@ Module Company
  */
 export const callCreateCompany = (
     name: string,
+    location: string,
     address: string,
     description: string,
     logo: string
 ) => {
     return axios.post<IBackendRes<ICompany>>("/api/v1/companies", {
         name,
+        location,
         address,
         description,
         logo,
@@ -97,12 +99,14 @@ export const callCreateCompany = (
 export const callUpdateCompany = (
     id: string,
     name: string,
+    location: string,
     address: string,
     description: string,
     logo: string
 ) => {
     return axios.patch<IBackendRes<ICompany>>(`/api/v1/companies/${id}`, {
         name,
+        location,
         address,
         description,
         logo,

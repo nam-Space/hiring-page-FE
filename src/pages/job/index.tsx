@@ -1,4 +1,4 @@
-import SearchClient from '@/components/client/search.client';
+import SearchJobClient from '@/components/client/search/searchJob.client';
 import { Col, Divider, Row } from 'antd';
 import styles from 'styles/client/client.module.scss';
 import JobCard from '@/components/client/card/job.card';
@@ -15,7 +15,7 @@ const ClientJobPage = (props: any) => {
         <div className={styles["container"]} style={{ marginTop: 20 }}>
             <Row gutter={[20, 20]}>
                 <Col span={24}>
-                    <SearchClient searchJob={searchJob} setSearchJob={setSearchJob} />
+                    <SearchJobClient searchJob={searchJob} setSearchJob={setSearchJob} />
                 </Col>
                 <Divider />
 
