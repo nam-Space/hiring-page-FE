@@ -167,8 +167,10 @@ const LayoutAdmin = () => {
                         collapsible
                         collapsed={collapsed}
                         onCollapse={(value) => setCollapsed(value)}>
-                        <div style={{ height: 32, margin: 16, textAlign: 'center' }}>
-                            <BugOutlined />  ADMIN
+                        <div style={{ display: 'block', height: 32, margin: 16, textAlign: 'center' }}>
+                            <Link to={"/admin"} >
+                                <BugOutlined />  ADMIN
+                            </Link>
                         </div>
                         <Menu
                             selectedKeys={[activeMenu]}
@@ -202,7 +204,7 @@ const LayoutAdmin = () => {
 
                             <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                                 <Space style={{ cursor: "pointer" }}>
-                                    Welcome {user?.name}
+                                    {user?.name}
                                     <Avatar src={user?.avatar ? `${import.meta.env.VITE_BACKEND_URL}/images/user/${user?.avatar}` : defaultAvatar}></Avatar>
                                 </Space>
                             </Dropdown>

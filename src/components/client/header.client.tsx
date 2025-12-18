@@ -4,7 +4,6 @@ import { Avatar, Drawer, Dropdown, MenuProps, Space, message } from 'antd';
 import { Menu, ConfigProvider } from 'antd';
 import styles from '@/styles/client/client.module.scss';
 import { isMobile } from 'react-device-detect';
-import { FaReact } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -12,6 +11,7 @@ import { callLogout } from '@/config/api';
 import { setLogoutAction } from '@/redux/slice/accountSlide';
 import ManageAccount from './modal/manageAccount/manage.account';
 import defaultAvatar from '@/assets/images/user/default-avatar.png'
+import logo from '@/assets/images/logo/logo.png'
 
 const Header = (props: any) => {
     const navigate = useNavigate();
@@ -96,10 +96,10 @@ const Header = (props: any) => {
             <div className={styles["header-section"]}>
                 <div className={styles["container"]}>
                     {!isMobile ?
-                        <div style={{ display: "flex", gap: 30 }}>
-                            <div className={styles['brand']} >
-                                <FaReact onClick={() => navigate('/')} title='Nam Nguyễn' />
-                            </div>
+                        <div style={{ display: "flex", gap: 30, alignItems: 'center', height: '100%' }}>
+                            <Link to={"/"} className={styles['brand']} >
+                                <img src={logo} alt='logo' />
+                            </Link>
                             <div className={styles['top-menu']}>
                                 <ConfigProvider
                                     theme={{
@@ -124,7 +124,7 @@ const Header = (props: any) => {
                                         :
                                         <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                                             <Space style={{ cursor: "pointer" }}>
-                                                <span>Welcome {user?.name}</span>
+                                                <span>{user?.name}</span>
                                                 <Avatar src={user?.avatar ? `${import.meta.env.VITE_BACKEND_URL}/images/user/${user?.avatar}` : defaultAvatar}></Avatar>
                                             </Space>
                                         </Dropdown>
